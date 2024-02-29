@@ -1,11 +1,11 @@
 import React from 'react';
 import { View } from 'react-native';
-import Comments from './src/SecondaryScreens/Comments';
+import StackRoutes from './routes/stack.routes';
 
 const App = () => {
   return (
     <View style={{ flex: 1 }}>
-      <Comments/>
+      <StackRoutes/>
     </View>
   );
 };

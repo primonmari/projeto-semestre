@@ -1,29 +1,10 @@
 import React, { useState } from 'react';
-import { StyleSheet, ScrollView, View, TouchableOpacity, Text, Modal, TextInput, Button } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
-import ChatScreen from '../Components/ChatScreen'; // Importa o componente de tela de chat
+import { StyleSheet, ScrollView, View, TouchableOpacity, Text, Modal, } from 'react-native';
 import { callWorks } from '../fakeApi/fakeapi'; // Importa os dados de obras (fake)
 
-const Stack = createStackNavigator(); // Cria uma pilha de navegação
-
-export default function Comments() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="CommentsList" component={CommentsList} options={{ title: 'Comentários' }} />
-        <Stack.Screen name="Chat" component={ChatScreen} options={{ title: 'Chat' }} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
-
-function CommentsList({ navigation }) { //recebe navigation
+export default function Comments({ navigation }) { //recebe navigation
   const [selectedObra, setSelectedObra] = useState(null); //estado da obra selecionada
   const [modalVisible, setModalVisible] = useState(false); //modal inicializa fechado
-  const [message, setMessage] = useState(''); //estado da mensagem inicia vazio por enquanto
-  const [comments, setComments] = useState({}); //estado para armazenar os comentários,inicializado 
-  //como um objeto vazio {} porque ele será usado para armazenar os comentários relacionados a cada obra.
 
   //função chamada ao pressionar no botão de uma obra
   const handleObraPress = (obra) => {
@@ -31,30 +12,15 @@ function CommentsList({ navigation }) { //recebe navigation
     // Navega para a tela de chat ao clicar no botão "Chat"
     navigation.navigate('Chat', { obra });
   };
-  // Função para lidar com a adição de um comentário
-  const handleAddComment = () => {
-    console.log('Obra selecionada:', selectedObra.name);
-    console.log('Mensagem adicionada:', message);
-
-    // Adiciona o novo comentário ao estado de comentários
-    const updatedComments = { ...comments }; //cria copia do objeto comments, para não modificar o estado original diretamente
-    //updateComments é a copia 
-    if (!updatedComments[selectedObra.id]) { //verifica se já existe uma entrada para a obra selecionada dentro do objeto updatedComments. 
-      updatedComments[selectedObra.id] = [];//Se não existir, cria uma nova entrada com a chave sendo o ID da obra e o valor sendo uma lista 
-      //vazia []. Isso garante que teremos um array onde pode adicionar os comentários.
-    }
-    updatedComments[selectedObra.id].push(message); //Adiciona o novo comentário à lista de comentários 
-    //associada à obra selecionada. A função push() adiciona o message à lista.
-    setComments(updatedComments);//atualiza o estado comments com o novo objeto updatedComments, que agora contém o novo comentário adicionado.
-    //setModalVisible(false);//fecha modal apos add coment
-    // Lógica para enviar a mensagem para o servidor
-  };
+  
 
   // Retorna a interface da lista de comentários
+
   return (
     <ScrollView style={styles.container}>
       {/* Mapeia minha Api fake, obra representa os elementos */}
       {callWorks.map((obra) => (
+        //Botão principal
         <TouchableOpacity
           key={obra.id} //pega elemento renderizado
           style={styles.button}
@@ -63,20 +29,26 @@ function CommentsList({ navigation }) { //recebe navigation
           <View style={styles.circle}></View>
           <View style={styles.textContainer}>
             <Text style={styles.title}>{obra.name}</Text>
+            
             {/* Botão para abrir a tela de bate-papo */}
             <TouchableOpacity
               style={styles.chatButton}
               onPress={() => handleObraPress(obra)}
             >
               <Text style={styles.chatButtonText}>Chat</Text>
-            </TouchableOpacity>
-            {/* Exibe os comentários para esta obra, se houver */}
-            {comments[obra.id] && comments[obra.id].map((comment, index) => (
-              <Text key={index}>{comment}</Text>
-            ))}
+            </TouchableOpacity>         
           </View>
         </TouchableOpacity>
       ))}
+
+      {/*
+      {selectedObra && (
+        <View style={styles.selectedObraContainer}>
+          <Text>{selectedObra.name}</Text>
+        </View>
+      //)}
+      */}
+
       <Modal
         animationType="slide"
         transparent={true}
@@ -86,17 +58,6 @@ function CommentsList({ navigation }) { //recebe navigation
         }}
       >
         <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Adicionar Comentário para {selectedObra?.name}</Text>
-            <TextInput
-              style={styles.input}
-              multiline
-              placeholder="Digite sua mensagem..."
-              value={message}
-              onChangeText={setMessage}
-            />
-            <Button title="Adicionar Comentário" onPress={handleAddComment} />
-          </View>
         </View>
       </Modal>
     </ScrollView>
@@ -105,8 +66,7 @@ function CommentsList({ navigation }) { //recebe navigation
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 20,
-    marginTop: 40,
+    paddingVertical: 10,
   },
   button: {
     flexDirection: 'row',
