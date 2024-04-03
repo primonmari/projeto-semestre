@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { StyleSheet, ScrollView, View, TouchableOpacity, Text, Modal, } from 'react-native';
-import { callWorks } from '../fakeApi/fakeapi'; // Importa os dados de obras (fake)
+import { callWorks } from '../fakeApi/fakeapi'; // Importa os dados de grupos (fake)
 
-export default function Comments({ navigation }) { //recebe navigation
-  const [selectedObra, setSelectedObra] = useState(null); //estado da obra selecionada
+export default function Group({ navigation }) { //recebe navigation
+  const [selectedGroup, setSelectedGroup] = useState(null); //estado da grupo selecionada
   const [modalVisible, setModalVisible] = useState(false); //modal inicializa fechado
 
-  //função chamada ao pressionar no botão de uma obra
-  const handleObraPress = (obra) => {
-    setSelectedObra(obra); //define a obra selecionada
+  //função chamada ao pressionar no botão de um grupo
+  const handleGroupPress = (group) => {
+    setSelectedGroup(group); //define a grupo selecionada
     // Navega para a tela de chat ao clicar no botão "Chat"
-    navigation.navigate('Chat', { obra });
+    navigation.navigate('Chat', { group });
   };
   
 
@@ -18,22 +18,22 @@ export default function Comments({ navigation }) { //recebe navigation
 
   return (
     <ScrollView style={styles.container}>
-      {/* Mapeia minha Api fake, obra representa os elementos */}
-      {callWorks.map((obra) => (
+      {/* Mapeia minha Api fake, grupo representa os elementos */}
+      {callWorks.map((group) => (
         //Botão principal
         <TouchableOpacity
-          key={obra.id} //pega elemento renderizado
+          key={group.id} //pega elemento renderizado
           style={styles.button}
-          onPress={() => handleObraPress(obra)} //quando botão é pressionado
+          onPress={() => handleGroupPress(group)} //quando botão é pressionado
         >
           <View style={styles.circle}></View>
           <View style={styles.textContainer}>
-            <Text style={styles.title}>{obra.name}</Text>
+            <Text style={styles.title}>{group.name}</Text>
             
             {/* Botão para abrir a tela de bate-papo */}
             <TouchableOpacity
               style={styles.chatButton}
-              onPress={() => handleObraPress(obra)}
+              onPress={() => handleGroupPress(group)}
             >
               <Text style={styles.chatButtonText}>Chat</Text>
             </TouchableOpacity>         
@@ -42,9 +42,9 @@ export default function Comments({ navigation }) { //recebe navigation
       ))}
 
       {/*
-      {selectedObra && (
-        <View style={styles.selectedObraContainer}>
-          <Text>{selectedObra.name}</Text>
+      {selectedGroup && (
+        <View style={styles.selectedGroupContainer}>
+          <Text>{selectedGroup.name}</Text>
         </View>
       //)}
       */}
