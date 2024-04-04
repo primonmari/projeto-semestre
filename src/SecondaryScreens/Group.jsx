@@ -6,16 +6,15 @@ export default function Group({ navigation }) { //recebe navigation
   const [selectedGroup, setSelectedGroup] = useState(null); //estado da grupo selecionada
   const [modalVisible, setModalVisible] = useState(false); //modal inicializa fechado
 
-  //função chamada ao pressionar no botão de um grupo
+  //função que é chamada ao pressionar no botão de um grupo
   const handleGroupPress = (group) => {
-    setSelectedGroup(group); //define a grupo selecionada
+    setSelectedGroup(group); //define o grupo selecionado
     // Navega para a tela de chat ao clicar no botão "Chat"
     navigation.navigate('Chat', { group });
   };
   
 
   // Retorna a interface da lista de comentários
-
   return (
     <ScrollView style={styles.container}>
       {/* Mapeia minha Api fake, grupo representa os elementos */}
@@ -40,14 +39,6 @@ export default function Group({ navigation }) { //recebe navigation
           </View>
         </TouchableOpacity>
       ))}
-
-      {/*
-      {selectedGroup && (
-        <View style={styles.selectedGroupContainer}>
-          <Text>{selectedGroup.name}</Text>
-        </View>
-      //)}
-      */}
 
       <Modal
         animationType="slide"

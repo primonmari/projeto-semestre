@@ -92,19 +92,19 @@ const styles = StyleSheet.create({
   button: {
     width: '80%',
     height: 40,
-    backgroundColor: '#007bff',
+    backgroundColor: '#358957',
     borderRadius: 5,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 10,
   },
   buttonText: {
-    color: '#fff',
+    color: '#052F0E',
     fontSize: 16,
     fontWeight: 'bold',
   },
   cadastroLink: {
-    color: 'blue',
+    color: '#052F0E',
     textDecorationLine: 'underline',
   },
 });

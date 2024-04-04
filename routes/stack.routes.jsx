@@ -11,7 +11,14 @@ const Stack = createStackNavigator();
 export default function StackRoutes() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          headerTintColor: '#FFFFFF', // Define a cor da seta de voltar e do texto do cabeçalho
+          headerBackTitleStyle: { color: '#FFFFFF' }, // Define o estilo do texto "Voltar"
+          headerStyle: { backgroundColor: '#052F0E' }, // Define a cor de fundo do cabeçalho
+
+        }}
+      >
         {/* Define a tela de login como a tela inicial */}
         <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         {/* Adiciona a tela de cadastro */}
