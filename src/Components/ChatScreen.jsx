@@ -123,7 +123,6 @@ export default function ChatScreen({ route }) {
             </View>
           )
 ))}
-
         </View>
 
         {/* Componente para entrada de nova mensagem */}
