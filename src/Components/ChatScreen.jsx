@@ -102,28 +102,28 @@ export default function ChatScreen({ route }) {
 
         {/* Componente para exibir as mensagens */}
         <View style={styles.chatContainer}>
-          {messages.map((msg) => (
-            ((!showAlunoMessages && !showProfessorMessages && !showAllMessages) || 
-            (showAlunoMessages && msg.sender.startsWith('aluno')) || 
-            (showProfessorMessages && msg.sender === 'professor') || 
-            showAllMessages) && (
-              <View key={msg.id}>
-                {msg.sender !== 'user' && (
-                  <Text style={styles.sender}>
-                    {msg.sender === 'professor' ? 'Professor' : `Aluno ${msg.sender.substr(-1)}`}
-                  </Text>
-                )}
-                <View style={msg.sender === 'user' ? styles.userMessage : msg.sender === 'professor' ? styles.professorMessage : styles.alunoMessage}>
-                  <Text>{msg.text}</Text>
-                </View>
-                {/* Adicionando a hora com base no remetente da mensagem */}
-                <Text style={[styles.timestamp, msg.sender === 'user' ? { alignSelf: 'flex-end' } : { alignSelf: 'flex-start' }]}>
-                  {formatTimestamp(msg.timestamp)}
+        {messages.map((msg) => (
+          ((!showAlunoMessages && !showProfessorMessages && !showAllMessages) || 
+          (showAlunoMessages && (msg.sender.startsWith('aluno') || msg.sender === 'user')) ||  // Aqui adicionamos a condição para incluir mensagens do usuário
+          (showProfessorMessages && msg.sender === 'professor') || 
+          showAllMessages) && (
+            <View key={msg.id}>
+              {msg.sender !== 'user' && (
+                <Text style={styles.sender}>
+                  {msg.sender === 'professor' ? 'Professor' : `Aluno ${msg.sender.substr(-1)}`}
                 </Text>
-                <View style={{ height: 5 }} />
+              )}
+              <View style={msg.sender === 'user' ? styles.userMessage : msg.sender === 'professor' ? styles.professorMessage : styles.alunoMessage}>
+                <Text>{msg.text}</Text>
               </View>
-            )
-          ))}
+              <Text style={[styles.timestamp, msg.sender === 'user' ? { alignSelf: 'flex-end' } : { alignSelf: 'flex-start' }]}>
+                {formatTimestamp(msg.timestamp)}
+              </Text>
+              <View style={{ height: 5 }} />
+            </View>
+          )
+))}
+
         </View>
 
         {/* Componente para entrada de nova mensagem */}
