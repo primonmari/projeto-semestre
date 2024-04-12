@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from "@react-navigation/native"; // Importa o hook de navegação
 import AsyncStorage from '@react-native-async-storage/async-storage'; // Importa AsyncStorage para armazenamento local
+import { collection, addDoc } from "firebase/firestore"; 
+
+import db from '../../services/firebaseConf';
 
 const CadastroScreen = () => {
   const navigation = useNavigation(); // Obtém o objeto de navegação
@@ -20,18 +23,31 @@ const CadastroScreen = () => {
         return; // Impede o cadastro se o e-mail não for válido
       }
 
-      // Salva o e-mail e a senha no AsyncStorage
-      await AsyncStorage.setItem('email', email);
-      await AsyncStorage.setItem('password', password);
+        // Salva o e-mail e a senha no AsyncStorage
+        await AsyncStorage.setItem('email', email);
+        await AsyncStorage.setItem('password', password);
 
-      // Redireciona o usuário para a tela de login com e-mail e senha memorizados
-      navigation.navigate("Login", { email: email, password: password });
-    } catch (error) {
-      // Exibe um alerta em caso de erro ao acessar o AsyncStorage
-      Alert.alert('Erro', 'Ocorreu um erro ao tentar fazer o cadastro.');
-      console.error('Error:', error);
-    }
-  };
+        // Redireciona o usuário para a tela de login com e-mail e senha memorizados
+        navigation.navigate("Login", { email: email, password: password });
+      } catch (error) {
+        // Exibe um alerta em caso de erro ao acessar o AsyncStorage
+        Alert.alert('Erro', 'Ocorreu um erro ao tentar fazer o cadastro.');
+        console.error('Error:', error);
+      }
+     
+      try {
+        const docRef = await addDoc(collection(db, "usuarios"), {
+          email,
+          password
+        });
+      
+        console.log("Document written with ID: ", docRef.id);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+
+
+    };
   
   return (
     <View style={styles.container}>

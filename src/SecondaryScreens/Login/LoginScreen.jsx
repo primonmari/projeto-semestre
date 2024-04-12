@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { collection, query, where, getDocs } from "firebase/firestore";
+import db from '../../services/firebaseConf';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -9,8 +11,25 @@ const LoginScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+
   const handleLogin = async () => {
     try {
+      const usuarios = collection(db, 'usuarios');
+      const q = query(usuarios, where("email", "==", email));
+
+      const dados = await getDocs(q)
+      dados.forEach(dado => {
+        console.log(dado.data())
+        if(dado.data().password == password){
+          navigation.navigate("Grupos")
+        }else{
+          console.log("senha incorreta")
+        }
+        
+
+      });
+      
+
       // Recupera as credenciais armazenadas no AsyncStorage
       const storedEmail = await AsyncStorage.getItem('email');
       const storedPassword = await AsyncStorage.getItem('password');
@@ -34,6 +53,8 @@ const LoginScreen = () => {
       Alert.alert('Erro', 'Ocorreu um erro ao tentar fazer o login.');
       console.error('Error:', error);
     }
+
+
   };
   
   const handleCadastroPress = () => {
