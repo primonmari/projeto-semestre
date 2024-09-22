@@ -25,7 +25,10 @@ export default function Group({ navigation }) { //recebe navigation
           style={styles.button}
           onPress={() => handleGroupPress(group)} //quando botão é pressionado
         >
-          <View style={styles.circle}></View>
+          <View style={styles.circle}>
+            <Text style={styles.circleText}>{group.name.charAt(0).toUpperCase()}</Text>
+
+          </View>
           <View style={styles.textContainer}>
             <Text style={styles.title}>{group.name}</Text>
             
@@ -74,7 +77,17 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     backgroundColor: '#E3E3E3',
     marginRight: 10,
+    justifyContent: 'center', // Centraliza verticalmente
+    alignItems: 'center', // Centraliza horizontalmente
   },
+  circleText: {
+    color: '#fff', // Cor do texto (branco para contrastar com o fundo)
+    fontSize: 24, // Tamanho da fonte para a letra
+    fontWeight: 'bold',
+    textAlign: 'center', 
+    justifyContent: 'center',
+  },
+
   textContainer: {
     flex: 1,
     flexDirection: 'row',
