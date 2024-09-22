@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView, View, TouchableOpacity, Text, Modal, } from 're
 import { callWorks } from '../fakeApi/fakeapi'; // Importa os dados de grupos (fake)
 
 export default function Group({ navigation }) { //recebe navigation
-  const [selectedGroup, setSelectedGroup] = useState(null); //estado da grupo selecionada
+  const [selectedGroup, setSelectedGroup] = useState(null); //estado do grupo selecionado
   const [modalVisible, setModalVisible] = useState(false); //modal inicializa fechado
 
   //função que é chamada ao pressionar no botão de um grupo
