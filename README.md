@@ -10,7 +10,7 @@ Este projeto é um dos desenvolvidos durante a disciplina de Computação Gráfi
 ## Layout mobile
 
 <p align="center">
-    <img src="src/assets/to_readme/projeto-semestre.gif" width="400" height="800" alt="Demonstração do projeto">
+    <img src="src/assets/to_readme/chat.gif" width="400" height="800" alt="Demonstração do projeto">
 </p>
 
 
