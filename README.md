@@ -29,7 +29,7 @@ Pré-requisitos: Firebase Firestore
 
 ```bash
 # clonar repositório
-git clone https://github.com/devsuperior/sds1-wmazoni](https://github.com/primonmari/projeto-semestre.git
+git clone https://github.com/primonmari/projeto-semestre.git
 
 # instalar dependências
 npm install
